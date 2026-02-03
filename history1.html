@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Indian History MCQ Quiz - RRB</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background:#f4f4f4;
+            padding:20px;
+        }
+        h1{
+            text-align:center;
+        }
+        .question{
+            background:white;
+            padding:15px;
+            margin-bottom:15px;
+            border-radius:8px;
+            box-shadow:0 0 5px gray;
+        }
+        button{
+            padding:10px 20px;
+            font-size:16px;
+            margin-top:20px;
+        }
+        #result{
+            font-size:18px;
+            font-weight:bold;
+            margin-top:20px;
+        }
+        .correct{
+            color:green;
+        }
+        .wrong{
+            color:red;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Indian History MCQ Quiz (RRB)</h1>
+
+<form id="quizForm">
+
+<div id="questions"></div>
+
+<button type="button" onclick="submitQuiz()">Submit</button>
+
+</form>
+
+<div id="result"></div>
+
+<script>
+const quizData = [
+{
+q: "1. The study of the past is called:",
+options: ["Geography","History","Civics","Economics"],
+answer: 1
+},
+{
+q: "2. The word ‘History’ is derived from which Greek word?",
+options: ["Historia","Historica","Historio","Histon"],
+answer: 0
+},
+{
+q: "3. ‘Historia’ means:",
+options: ["Story writing","Investigation / Inquiry","War study","Culture"],
+answer: 1
+},
+{
+q: "4. Who is called the first real historian of the world?",
+options: ["Herodotus","Cicero","Ranke","E.H. Carr"],
+answer: 0
+},
+{
+q: "5. Who is known as the ‘Father of Modern History’?",
+options: ["Karl Marx","Herodotus","Leopold von Ranke","Cicero"],
+answer: 2
+},
+{
+q: "6. BC stands for:",
+options: ["Before Christ","British Calendar","Before Calendar","Birth Century"],
+answer: 0
+},
+{
+q: "7. AD stands for:",
+options: ["After Death","Anno Domini","After Domini","Ancient Date"],
+answer: 1
+},
+{
+q: "8. Gautama Buddha was born in:",
+options: ["563 BC","483 BC","356 BC","323 BC"],
+answer: 0
+},
+{
+q: "9. A decade means:",
+options: ["5 years","10 years","25 years","50 years"],
+answer: 1
+},
+{
+q: "10. Quarter of a century means:",
+options: ["10 years","20 years","25 years","50 years"],
+answer: 2
+},
+{
+q: "11. A century means:",
+options: ["10 years","50 years","100 years","1000 years"],
+answer: 2
+},
+{
+q: "12. A millennium means:",
+options: ["100 years","500 years","1000 years","2000 years"],
+answer: 2
+},
+{
+q: "13. The term ‘Circa’ is used when:",
+options: ["Exact date is known","Exact date is not known","For BC only","For AD only"],
+answer: 1
+},
+{
+q: "14. First decade of 20th century AD refers to:",
+options: ["1900–1910","1901–1910","1905–1915","1910–1920"],
+answer: 1
+},
+{
+q: "15. Last decade of 20th century AD refers to:",
+options: ["1990–2000","1991–2000","1981–1990","2000–2010"],
+answer: 1
+},
+{
+q: "15. Last decade of 20th century AD refers to:",
+options: ["1990–2000","1991–2000","1981–1990","2000–2010"],
+answer: 1
+}
+,
+{
+q: "16. First half of a century means:",
+options: ["1–25 years","1–50 years","50–100 years","25–75 years"],
+answer: 1
+},
+{
+q: "17. A line displaying events of past time is called:",
+options: ["Calendar","Graph","Time Line","Period chart"],
+answer: 2
+},
+{
+q: "18. Who wrote the book 'Histories'?",
+options: ["Cicero","Herodotus","Ranke","Karl Marx"],
+answer: 1
+},
+{
+q: "19. Who said 'History repeats itself, first as tragedy, second as farce'?",
+options: ["Hegel","Karl Marx","Ranke","E.H. Carr"],
+answer: 1
+},
+{
+q: "20. According to E.H. Carr, history is:",
+options: ["Study of wars","Story of kings","Continuous process between historian and facts","Study of past only"],
+answer: 2
+},
+{
+q: "21. Second half of a century means:",
+options: ["1–50 years","25–75 years","51–100 years","10–60 years"],
+answer: 2
+},
+{
+q: "22. Fifth decade of 20th century AD refers to:",
+options: ["1940–1950","1941–1950","1950–1960","1931–1940"],
+answer: 1
+},
+{
+q: "23. Eighth decade of 20th century AD refers to:",
+options: ["1961–1970","1971–1980","1981–1990","1951–1960"],
+answer: 1
+},
+{
+q: "24. First quarter of 20th century AD means:",
+options: ["1900–1925","1901–1925","1925–1950","1910–1935"],
+answer: 1
+},
+{
+q: "25. Fourth quarter of 20th century AD means:",
+options: ["1950–1975","1975–2000","1980–2005","1990–2015"],
+answer: 1
+}
+
+]
+
+const questionsDiv = document.getElementById("questions");
+
+quizData.forEach((data, index) => {
+    let div = document.createElement("div");
+    div.className = "question";
+    let html = `<p>${data.q}</p>`;
+    data.options.forEach((opt, i) => {
+        html += `
+        <label>
+            <input type="radio" name="q${index}" value="${i}">
+            ${opt}
+        </label><br>`;
+    });
+    div.innerHTML = html;
+    questionsDiv.appendChild(div);
+});
+
+function submitQuiz(){
+    let score = 0;
+    let resultHTML = "<h2>Result:</h2>";
+
+    quizData.forEach((data, index) => {
+        const selected = document.querySelector(`input[name="q${index}"]:checked`);
+        if(selected){
+            if(parseInt(selected.value) === data.answer){
+                score++;
+                resultHTML += `<p class="correct">Q${index+1}: Correct</p>`;
+            } else {
+                resultHTML += `<p class="wrong">Q${index+1}: Wrong (Correct Answer: ${data.options[data.answer]})</p>`;
+            }
+        } else {
+            resultHTML += `<p class="wrong">Q${index+1}: Not Answered (Correct Answer: ${data.options[data.answer]})</p>`;
+        }
+    });
+
+    resultHTML += `<h3>Your Score: ${score} / ${quizData.length} Marks</h3>`;
+    document.getElementById("result").innerHTML = resultHTML;
+}
+</script>
+
+</body>
+</html>
